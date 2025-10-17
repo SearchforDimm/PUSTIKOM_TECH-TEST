@@ -1,106 +1,27 @@
-body {
-  font-family: Segoe UI, Roboto, Arial;
-  background: #f6f7fb;
-  color: #222;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .container {
-  max-width: 760px;
-  margin: 30px auto;
-  padding: 20px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 6px 18px rgba(12, 20, 40, 0.06);
-}
-
-h1 {
-  margin-top: 0;
-}
-
-form .row {
-  margin-bottom: 10px;
-}
-
-label {
-  display: block;
-  font-size: 14px;
-  margin-bottom: 6px;
-}
-
-input[type="text"],
-input[type="number"],
-select {
   width: 100%;
-  padding: 8px;
-  border: 1px solid #dfe3ea;
-  border-radius: 4px;
-}
-
-button {
-  background: #2563eb;
-  color: #fff;
-  padding: 8px 12px;
-  border: 0;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #1d4ed8;
-}
-
-.controls {
+  max-width: 1400px;
+  height: 100vh;
   display: flex;
-  gap: 12px;
+  justify-content: center;
   align-items: center;
-  margin: 14px 0;
+  gap: 20px;
+  flex-direction: column;
 }
 
-.total {
-  margin-left: auto;
-  font-weight: 600;
-}
-
-.expenses {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.expense-item {
+.container-flex {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px;
-  border-bottom: 1px solid #eef2f6;
+  gap: 20px;
 }
 
-.expense-item:last-child {
-  border-bottom: none;
-}
-
-.expense-item .desc {
-  font-weight: 600;
-}
-
-.meta {
-  font-size: 12px;
-  color: #666;
-  margin-top: 4px;
-}
-
-.amount {
-  font-weight: 700;
-  margin-right: 12px;
-}
-
-.error {
-  color: #b91c1c;
-  margin-top: 6px;
-}
-
-.empty {
-  text-align: center;
-  color: #666;
-  padding: 20px;
+#expense-form {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
