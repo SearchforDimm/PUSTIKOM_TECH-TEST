@@ -14,7 +14,7 @@
 ## demo
 
 1. start server
-2. buka http://localhost:300-
+2. buka http://localhost:3000
 3. tambahkan beberapa expense melalui form yang tersedia (pilih kategori)
 4. pakai dropdown filter, untuk memfilter dari category yang tersedia di dropdown
 5. pencet tombol delete di sebelah expense itu sendiri untuk menghapus expense yang sudah ada di list, dan total dari expensenya akan ter-update otomatis.
