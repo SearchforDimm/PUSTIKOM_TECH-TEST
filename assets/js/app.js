@@ -1,47 +1,63 @@
-// Local Storage API wrapper
+// File-based storage API wrapper
 const storage = {
-    KEY: 'expenses',
-
-    get() {
-        const data = localStorage.getItem(this.KEY);
-        return JSON.parse(data || '[]');
+    async get() {
+        try {
+            const response = await fetch('/data/expenses.json');
+            return await response.json();
+        } catch (e) {
+            console.error('Error reading expenses:', e);
+            return [];
+        }
     },
 
-    save(expenses) {
-        localStorage.setItem(this.KEY, JSON.stringify(expenses));
+    async save(expenses) {
+        try {
+            const response = await fetch('/data/expenses.json', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(expenses, null, 2)
+            });
+            return response.ok;
+        } catch (e) {
+            console.error('Error saving expenses:', e);
+            return false;
+        }
     },
 
-    getByCategory(category) {
-        const expenses = this.get();
+    async getByCategory(category) {
+        const expenses = await this.get();
         if (category && category !== 'All') {
             return expenses.filter(e => e.category === category);
         }
         return expenses;
     },
 
-    add(expense) {
-        const expenses = this.get();
+    async add(expense) {
+        const expenses = await this.get();
         const newExpense = {
             ...expense,
             id: crypto.randomUUID(),
             timestamp: new Date().toISOString()
         };
         expenses.push(newExpense);
-        this.save(expenses);
+        await this.save(expenses);
         return newExpense;
     },
 
-    delete(id) {
-        const expenses = this.get();
+    async delete(id) {
+        const expenses = await this.get();
         const index = expenses.findIndex(e => e.id === id);
         if (index !== -1) {
             const [deleted] = expenses.splice(index, 1);
-            this.save(expenses);
+            await this.save(expenses);
             return deleted;
         }
         return null;
     }
-}; const form = document.getElementById('expense-form');
+};
+
+// DOM Elements
+const form = document.getElementById('expense-form');
 const amountEl = document.getElementById('amount');
 const descEl = document.getElementById('description');
 const categoryEl = document.getElementById('category');
@@ -50,12 +66,14 @@ const listEl = document.getElementById('expenses-list');
 const totalEl = document.getElementById('total');
 const formError = document.getElementById('form-error');
 
-function load() {
+async function load() {
     const category = filterEl.value;
-    const expenses = storage.getByCategory(category);
+    const expenses = await storage.getByCategory(category);
     renderList(expenses);
     updateTotal(expenses);
-} function renderList(expenses) {
+}
+
+function renderList(expenses) {
     listEl.innerHTML = '';
     if (!expenses || expenses.length === 0) {
         listEl.innerHTML = '<li class="empty">No expenses</li>';
@@ -92,7 +110,7 @@ function escapeHtml(s) {
         .replace(/'/g, '&#39;');
 }
 
-form.addEventListener('submit', (ev) => {
+form.addEventListener('submit', async (ev) => {
     ev.preventDefault();
     formError.textContent = '';
     const amount = parseFloat(amountEl.value);
@@ -104,21 +122,25 @@ form.addEventListener('submit', (ev) => {
     if (!description) return formError.textContent = 'Please enter a description';
 
     try {
-        storage.add({ amount, description, category });
+        await storage.add({ amount, description, category });
         amountEl.value = '';
         descEl.value = '';
-        load();
+        await load();
     } catch (e) {
         formError.textContent = 'Failed to add expense';
         console.error(e);
     }
-}); filterEl.addEventListener('change', load);
+});
 
-listEl.addEventListener('click', (e) => {
+filterEl.addEventListener('change', () => load());
+
+listEl.addEventListener('click', async (e) => {
     if (e.target.matches('button.del')) {
         const id = e.target.getAttribute('data-id');
-        storage.delete(id);
-        load();
+        await storage.delete(id);
+        await load();
     }
-});// initial load
+});
+
+// initial load
 load();

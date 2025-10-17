@@ -1,23 +1,9 @@
 [
   {
-    "id": "8cc502b1-81a6-47e2-b97a-35d68e181484",
-    "amount": 120,
+    "amount": 123,
     "description": "Burger Prabowo",
     "category": "Food",
-    "timestamp": "2025-10-17T04:18:30.481Z"
-  },
-  {
-    "id": "0ab995e8-6751-4113-9171-ea0d49760f09",
-    "amount": 50,
-    "description": "Sosis Solo Jokowi",
-    "category": "Food",
-    "timestamp": "2025-10-17T04:18:49.975Z"
-  },
-  {
-    "id": "8aa32060-1031-4458-8c79-28e9d8288fff",
-    "amount": 10000,
-    "description": "Uang Pembangunan IKN",
-    "category": "Other",
-    "timestamp": "2025-10-17T04:19:42.502Z"
+    "id": "23f3978c-1513-4584-8f5b-721708fcd782",
+    "timestamp": "2025-10-17T06:21:39.867Z"
   }
 ]
